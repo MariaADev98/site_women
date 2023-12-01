@@ -3,8 +3,8 @@
 {% block content %}
 <ul class="list-articles">
     {% for p in posts %}
-    {% if p.is_published %}
-        <li><h2>{{p.title}}</h2>
+
+            <li><h2>{{p.title}}</h2>
     {% autoescape off %}
     {{p.content|linebreaks|truncatewords:40}}
     {% endautoescape %}
@@ -13,7 +13,7 @@
         <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
         </li>
 
-    {% endif %}
+
     {% endfor %}
 </ul>
 
