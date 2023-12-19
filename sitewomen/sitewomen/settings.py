@@ -42,21 +42,31 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'social_django',
     'captcha',
-
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 
 
 ]
 
+
+
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+ #   "django.middleware.cache.UpdateCacheMiddleware",
     'django.middleware.common.CommonMiddleware',
+ #   "django.middleware.cache.FetchFromCacheMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
+
+#CACHE_MIDDLEWARE_ALIAS = 'default'
+#CACHE_MIDDLEWARE_SECONDS = 10
+#CACHE_MIDDLEWARE_KEY_PREFIX = 'sitewomen'
 
 ROOT_URLCONF = 'sitewomen.urls'
 
@@ -94,11 +104,17 @@ DATABASES = {
         'PORT': 5432,
     }
 
+    # 'default': {
+    #   'ENGINE': 'django.db.backends.sqlite3',
+    #  'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+}
 
-     #'default': {
-     #   'ENGINE': 'django.db.backends.sqlite3',
-      #  'NAME': BASE_DIR / 'db.sqlite3',
-    #}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
 }
 
 # Password validation
@@ -141,7 +157,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -155,7 +170,6 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'users.authentication.EmailAuthBackend',
-
 
 ]
 
@@ -171,14 +185,12 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-
 AUTH_USER_MODEL = 'users.User'
 
 DEFAULT_USER_IMAGE = MEDIA_URL + 'users/default.png'
 
 SOCIAL_AUTH_GITHUB_KEY = 'd6e73791e0c1627f5176'
 SOCIAL_AUTH_GITHUB_SECRET = '8e23b904a744f394e9b3df59280e30dcf8770c8b'
-
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -192,3 +204,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+
+SITE_ID = 1
