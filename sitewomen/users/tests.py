@@ -16,6 +16,7 @@ class RegisterUserTestCase(TestCase):
             'password2': '12345678Aa',
 
         }
+
     def test_form_registration_get(self):
         path = reverse('users:register')
         response = self.client.get(path)
@@ -23,7 +24,6 @@ class RegisterUserTestCase(TestCase):
         self.assertTemplateUsed(response, 'users/register.html')
 
     def test_user_registration_success(self):
-
         user_model = get_user_model()
 
         path = reverse('users:register')
@@ -47,4 +47,3 @@ class RegisterUserTestCase(TestCase):
         response = self.client.post(path, self.data)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, "Пользователь с таким именем уже существует")
-

@@ -13,11 +13,10 @@ class PostSitemap(Sitemap):
     def lastmod(self, obj):
         return obj.time_update
 
+
 class CategorySitemap(Sitemap):
     changefreq = 'monthly'
     priority = 0.9
 
     def items(self):
         return Category.objects.all()
-
-

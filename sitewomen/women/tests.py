@@ -8,6 +8,7 @@ from women.models import Women
 
 class GetPagesTestCase(TestCase):
     fixtures = ['women_women.json', 'women_category.json', 'women_husband.json', 'women_tagpost.json']
+
     def setUp(self):
         "Инициализация перед выполнением каждого теста"
 
@@ -38,7 +39,6 @@ class GetPagesTestCase(TestCase):
         path = reverse('post', args=[w.slug])
         response = self.client.get(path)
         self.assertEqual(w.content, response.context_data['post'].content)
-
 
     def tearDown(self):
         "Действие после выполнения каждого теста"
